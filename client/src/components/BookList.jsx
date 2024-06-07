@@ -4,7 +4,7 @@ import { deleteBook, getAllBooks, updateBook } from '../api/books.api'
 import { Table } from './Table'
 import { BookTable } from './BookTable'
 import { BookFormPage } from '../pages/BookFormPage'
-import { Toaster, toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { left } from '@popperjs/core'
 

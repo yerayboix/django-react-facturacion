@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { ModalBookEdit } from './ModalBookEdit'
 import { updateBook } from '../api/books.api'
-import { toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 
 export function Table ({ headers, contents, handleBookSave, handleBookDelete }) {
   const [showModal, setShowModal] = useState(false)

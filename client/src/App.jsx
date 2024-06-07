@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { BookPage } from './pages/BookPage'
 import { BookFormPage } from './pages/BookFormPage'
 import { Navigation } from './components/Navigation'
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from 'react-hot-toast'
 import { ChevronDown, Lock, Activity, Flash, Server, TagUser, Scale } from './components/Icons.jsx'
 import { AcmeLogo } from './components/AcmeLogo.jsx'
 import './css/main.css'
@@ -37,6 +37,7 @@ function App () {
 
   return (
     <BrowserRouter>
+      <div><Toaster/></div>
       <Navbar
         style={{ backgroundColor: '#e8e8f55e' }}
         classNames={{

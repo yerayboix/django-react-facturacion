@@ -30,8 +30,8 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
           <TableColumn style={centerStyle}>TÍTULO</TableColumn>
           <TableColumn style={centerStyle}>ID</TableColumn>
           <TableColumn style={centerStyle}>CANTIDAD</TableColumn>
-          <TableColumn style={centerStyle}>PRECIO</TableColumn>
-          <TableColumn style={centerStyle}>DESCUENTO</TableColumn>
+          <TableColumn style={centerStyle}>PRECIO €</TableColumn>
+          <TableColumn style={centerStyle}>DESCUENTO %</TableColumn>
           <TableColumn style={centerStyle}>ACCIONES</TableColumn>
         </TableHeader>
         <TableBody items={contents}>
