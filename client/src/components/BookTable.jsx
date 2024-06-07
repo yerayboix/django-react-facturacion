@@ -14,14 +14,18 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
     setSelectedBook(book)
   }
 
+  const handleClose = () => {
+    setSelectedBook(null)
+  }
+
   const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0'
+  const iconClassesDanger = 'text-xl pointer-events-none flex-shrink-0'
   const centerStyle = { textAlign: 'center' }
 
   return (
     <>
-    
       <Table>
-        <TableHeader columns={headers}>
+        <TableHeader columns={headers} aria-label='Book list'>
           <TableColumn style={centerStyle}>IMAGEN</TableColumn>
           <TableColumn style={centerStyle}>TÍTULO</TableColumn>
           <TableColumn style={centerStyle}>ID</TableColumn>
@@ -69,7 +73,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
                         className='text-danger'
                         color='danger'
                         description='Borrar permanentemente el libro y sus datos'
-                        startContent={<DeleteIcon className={`${iconClasses} text-danger`} />}
+                        startContent={<DeleteIcon className={`${iconClassesDanger} text-danger`} />}
                         onClick={() => handleBookDelete(content)}
                         aria-label='Delete book'
                       >
@@ -89,6 +93,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
           onOpenChange={onOpenChange}
           handleSave={handleBookSave}
           item={selectedBook}
+          handleClose={handleClose}
         />
       )}
     </>

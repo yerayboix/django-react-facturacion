@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link } from '@nextui-org/react'
 import { set } from 'react-hook-form'
 
-export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
+export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item, handleClose }) {
   const [formData, setFormData] = useState({ ...item })
   const [isLoadingState, setIsLoadingState] = useState(false)
 
@@ -19,6 +19,7 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
     await handleSave(formData)
     setIsLoadingState(true)
     onOpenChange(false)
+    handleClose()
   }
 
   return (
@@ -26,6 +27,7 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       placement='top-center'
+      onClose={handleClose}
     >
       <ModalContent>
         {(onClose) => (
@@ -71,7 +73,7 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
                   />
             </ModalBody>
             <ModalFooter>
-              <Button color='danger' variant='flat' onPress={onClose}>
+              <Button color='danger' variant='flat' onClick={handleClose} onPress={onClose}>
                 Cerrar
               </Button>
               <Button color='primary' onClick={handleSubmit} isLoading={isLoadingState}>
