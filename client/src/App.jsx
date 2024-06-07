@@ -63,21 +63,9 @@ function App () {
           </Link>
         </NavbarBrand>
         <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-          <NavbarItemWithActive href='/almacen'>
-            <Link color='foreground' href='/almacen'>
-              Almacén
-            </Link>
-          </NavbarItemWithActive>
-          <NavbarItemWithActive href='/pedidos'>
-            <Link color='foreground' href='/pedidos'>
-              Pedidos
-            </Link>
-          </NavbarItemWithActive>
-          <NavbarItemWithActive href='/facturas'>
-            <Link color='foreground' href='/facturas'>
-              Facturas
-            </Link>
-          </NavbarItemWithActive>
+          <NavbarItemWithActive href='/almacen' children='Almacén' />
+          <NavbarItemWithActive href='/pedidos' children='Pedidos'/>
+          <NavbarItemWithActive href='/facturas' children='Facturas'/>
         </NavbarContent>
         <NavbarContent className='flex sm:hidden gap-4' justify='center'>
           <Dropdown>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link } from '@nextui-org/react'
+import { set } from 'react-hook-form'
 
 export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
   const [formData, setFormData] = useState({ ...item })
+  const [isLoadingState, setIsLoadingState] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -12,9 +14,11 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
     })
   }
 
-  const handleSubmit = () => {
-    // handleSave(formData)
-    console.log('AAAAAAA')
+  const handleSubmit = async () => {
+    setIsLoadingState(false)
+    await handleSave(formData)
+    setIsLoadingState(true)
+    onOpenChange(false)
   }
 
   return (
@@ -48,7 +52,7 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
                 onChange={handleChange}
               /><Input
                 autoFocus
-                label='Precio'
+                label='Precio €'
                 placeholder='Precio del libro por unidad'
                 variant='bordered'
                 value={formData.price}
@@ -57,7 +61,7 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
                 onChange={handleChange}
                 /><Input
                   autoFocus
-                  label='Descuento'
+                  label='Descuento %'
                   placeholder='Descuento del libro por unidad'
                   variant='bordered'
                   value={formData.discount}
@@ -68,10 +72,10 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
             </ModalBody>
             <ModalFooter>
               <Button color='danger' variant='flat' onPress={onClose}>
-                Close
+                Cerrar
               </Button>
-              <Button color='primary' onClick={handleSubmit} onPress={onClose}>
-                Sign in
+              <Button color='primary' onClick={handleSubmit} isLoading={isLoadingState}>
+                Guardar
               </Button>
             </ModalFooter>
           </>

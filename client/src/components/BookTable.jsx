@@ -6,23 +6,12 @@ import { IconMenuDown } from '../icons/IconMenuDown'
 import { ModalBookEdit } from './ModalBookEdit'
 
 export function BookTable ({ headers, contents, handleBookDelete, handleBookSave }) {
-  const [showModal, setShowModal] = useState(false)
   const [selectedBook, setSelectedBook] = useState(null)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const handleEditClick = (book) => {
     console.log(book)
     setSelectedBook(book)
-  }
-
-  const handleModalClose = () => {
-    isOpen(false)
-    setSelectedBook(null)
-  }
-
-  const handleSave = (book) => {
-    handleBookSave(book)
-    handleModalClose()
   }
 
   const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0'
@@ -56,7 +45,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
                     <Button
                       color='transparent'
                       isIconOnly
-                      aria-label='Like'
+                      aria-label='Actions'
                     >
                       <IconMenuDown className={iconClasses} style={{ fontSize: '2.5rem' }} />
                     </Button>
@@ -69,6 +58,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
                         description='Editar información del libro'
                         startContent={<EditIcon className={iconClasses} />}
                         onClick={() => handleEditClick(content)}
+                        aria-label='Edit book'
                       >
                         Editar libro
                       </DropdownItem>
@@ -81,6 +71,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
                         description='Borrar permanentemente el libro y sus datos'
                         startContent={<DeleteIcon className={`${iconClasses} text-danger`} />}
                         onClick={() => handleBookDelete(content)}
+                        aria-label='Delete book'
                       >
                         Borrar libro
                       </DropdownItem>
@@ -96,7 +87,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
         <ModalBookEdit
           isOpen={isOpen}
           onOpenChange={onOpenChange}
-          handleSave={handleSave}
+          handleSave={handleBookSave}
           item={selectedBook}
         />
       )}

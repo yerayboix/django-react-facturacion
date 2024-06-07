@@ -4,7 +4,7 @@ import { deleteBook, getAllBooks, updateBook } from '../api/books.api'
 import { Table } from './Table'
 import { BookTable } from './BookTable'
 import { BookFormPage } from '../pages/BookFormPage'
-import { Toaster, toast } from 'sonner'
+import { toast } from 'sonner'
 import { Link } from 'react-router-dom'
 import { left } from '@popperjs/core'
 
@@ -62,6 +62,7 @@ export function BookList () {
               contents={books}
               handleBookDelete={handleBookDelete}
               handleBookSave={handleBookSave}
+              ariaLabel='Book list'
             />
             )
           : (
