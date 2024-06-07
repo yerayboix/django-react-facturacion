@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
-import Figure from 'react-bootstrap/Figure'
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link } from '@nextui-org/react'
 
-export function ModalBookEdit ({ show, handleClose, handleSave, item }) {
+export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item }) {
   const [formData, setFormData] = useState({ ...item })
 
   const handleChange = (e) => {
@@ -14,81 +13,70 @@ export function ModalBookEdit ({ show, handleClose, handleSave, item }) {
   }
 
   const handleSubmit = () => {
-    handleSave(formData)
-    handleClose()
+    // handleSave(formData)
+    console.log('AAAAAAA')
   }
 
   return (
-    <Modal show={show} onHide={handleClose} size='lg'>
-      <Modal.Header style={{ justifyContent: 'center' }}>
-        <Modal.Title style={{ paddingLeft: '20px', fontSize: '2rem' }}>Editar libro</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Row>
-          <Col style={{ display: 'flex', justifyContent: 'center', paddingTop: '5px' }}>
-            <Figure>
-              <Figure.Image
-                style={{ borderRadius: '0.5rem', maxHeight: '475px', minHeight: '275px', width: 'auto', boxShadow: '-10px 1rem 1rem 1px rgb(0 0 0 / 37%)' }}
-                width={171}
-                height={180}
-                alt='191x180'
-                src='src/assets/images/Shambala.jpg'
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      placement='top-center'
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className='flex flex-col gap-1'>Editando libro</ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                label='Título'
+                placeholder='Título del libro'
+                variant='bordered'
+                value={formData.title}
+                name='title'
+                onChange={handleChange}
               />
-            </Figure>
-          </Col>
-          <Col style={{ paddingTop: '30px' }}>
-            <Form>
-              <Form.Group>
-                <Form.Label>Título</Form.Label>
-                <Form.Control
-                  type='text'
-                  name='title'
-                  value={formData.title}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Cantidad</Form.Label>
-                <Form.Control
+              <Input
+                autoFocus
+                label='Cantidad'
+                placeholder='Cantidad de libros en almacén'
+                variant='bordered'
+                value={formData.amount}
+                name='amount'
+                type='number'
+                onChange={handleChange}
+              /><Input
+                autoFocus
+                label='Precio'
+                placeholder='Precio del libro por unidad'
+                variant='bordered'
+                value={formData.price}
+                name='price'
+                type='number'
+                onChange={handleChange}
+                /><Input
+                  autoFocus
+                  label='Descuento'
+                  placeholder='Descuento del libro por unidad'
+                  variant='bordered'
+                  value={formData.discount}
+                  name='discount'
                   type='number'
-                  name='amount'
-                  value={formData.amount}
                   onChange={handleChange}
-                />
-              </Form.Group>
-              <div style={{ display: 'flex', flexWrap: 'no-wrap', justifyContent: 'space-between' }}>
-                <Form.Group className='me-1'>
-                  <Form.Label>Precio</Form.Label>
-                  <Form.Control
-                    type='number'
-                    step='0.01'
-                    name='price'
-                    value={formData.price}
-                    onChange={handleChange}
                   />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Descuento</Form.Label>
-                  <Form.Control
-                    type='number'
-                    name='discount'
-                    value={formData.discount}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </div>
-            </Form>
-          </Col>
-        </Row>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant='secondary' onClick={handleClose}>
-          Cancelar
-        </Button>
-        <Button variant='primary' onClick={handleSubmit}>
-          Guardar
-        </Button>
-      </Modal.Footer>
+            </ModalBody>
+            <ModalFooter>
+              <Button color='danger' variant='flat' onPress={onClose}>
+                Close
+              </Button>
+              <Button color='primary' onClick={handleSubmit} onPress={onClose}>
+                Sign in
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
     </Modal>
   )
 }

@@ -1,14 +1,13 @@
 body {
     --bs-body-font-family: Satoshi-Medium;
     --bs-body-font-size: 16px;
-    background-color: #faf6e6!important
 }
 
 html, body{
     min-height:100%;
 }
 body{
-    height:100vh;
+    height:auto;
 }
 
 .btn-danger {

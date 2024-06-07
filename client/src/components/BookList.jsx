@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { deleteBook, getAllBooks, updateBook } from '../api/books.api'
 import { Table } from './Table'
+import { BookTable } from './BookTable'
 import { BookFormPage } from '../pages/BookFormPage'
 import { Toaster, toast } from 'sonner'
 import { Link } from 'react-router-dom'
@@ -17,6 +18,7 @@ export function BookList () {
     setBooks(res.data)
     if (res.data.length > 0) {
       setBookHeaders(Object.keys(res.data[0]))
+      console.log(Object.keys(res.data[0]))
     }
   }
 
@@ -51,14 +53,11 @@ export function BookList () {
   }, [])
 
   return (
-    <div className='class-name'>
+    <div className='flex flex-col p-6 md:px-10 max-w-[95rem] mx-auto min-h-dvh'>
       <div className='table-responsive'>
-        <Link to='/books-create' style={{ width: '100%', textDecoration: 'none', display: 'flex', justifyContent: 'center' }}>
-          <button className='btn btn-primary' style={{ display: 'flex', whiteSpace: 'break-spaces' }}><img src='src/assets/icons/add.svg' style={{ width: 'auto' }} /> Añadir libro</button>
-        </Link>
         {bookHeaders.length > 0
           ? (
-            <Table
+            <BookTable
               headers={bookHeaders}
               contents={books}
               handleBookDelete={handleBookDelete}
