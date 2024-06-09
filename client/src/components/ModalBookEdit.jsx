@@ -28,6 +28,7 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item, handleC
       onOpenChange={onOpenChange}
       placement='top-center'
       onClose={handleClose}
+      backdrop='blur'
     >
       <ModalContent>
         {(onClose) => (

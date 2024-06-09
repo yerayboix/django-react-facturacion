@@ -24,7 +24,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
 
   return (
     <>
-      <Table>
+      <Table isHeaderSticky>
         <TableHeader columns={headers} aria-label='Book list'>
           <TableColumn style={centerStyle}>IMAGEN</TableColumn>
           <TableColumn style={centerStyle}>TÍTULO</TableColumn>
@@ -74,7 +74,7 @@ export function BookTable ({ headers, contents, handleBookDelete, handleBookSave
                         color='danger'
                         description='Borrar permanentemente el libro y sus datos'
                         startContent={<DeleteIcon className={`${iconClassesDanger} text-danger`} />}
-                        onClick={() => handleBookDelete(content)}
+                        onClick={() => handleBookDelete(content.id, content.title)}
                         aria-label='Delete book'
                       >
                         Borrar libro

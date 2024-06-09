@@ -25,8 +25,9 @@ export function BookList () {
   async function handleBookDelete (bookId, bookTitle) {
     console.log(bookId)
     await deleteBook(bookId)
-    toast.success(`Libro: <b>${bookTitle}</b> eliminado con éxito`, {
-      position: 'top-right'
+    toast.success(`Libro: ${bookTitle} eliminado con éxito`, {
+      position: 'top-right',
+      icon: '🗑️'
     })
     loadBooks()
   }
@@ -55,7 +56,7 @@ export function BookList () {
   }, [])
 
   return (
-    <div className='flex flex-col p-6 md:px-10 max-w-[95rem] mx-auto min-h-dvh'>
+    <div className='flex flex-col p-6 md:px-10 max-w-[60rem] mx-auto min-h-dvh'>
       <div className='table-responsive'>
         {bookHeaders.length > 0
           ? (
