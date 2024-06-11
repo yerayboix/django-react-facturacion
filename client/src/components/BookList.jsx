@@ -1,16 +1,15 @@
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from 'react'
 import { deleteBook, getAllBooks, updateBook } from '../api/books.api'
-import { Table } from './Table'
 import { BookTable } from './BookTable'
 import { BookFormPage } from '../pages/BookFormPage'
 import { toast } from 'react-hot-toast'
-import { Link } from 'react-router-dom'
-import { left } from '@popperjs/core'
 
 export function BookList () {
   const [books, setBooks] = useState([])
   const [bookHeaders, setBookHeaders] = useState([])
+  const [pages, setPages] = useState(1)
+  const rowsPerPage = 6
 
   async function loadBooks () {
     const res = await getAllBooks()
@@ -25,11 +24,11 @@ export function BookList () {
   async function handleBookDelete (bookId, bookTitle) {
     console.log(bookId)
     await deleteBook(bookId)
+    await loadBooks()
     toast.success(`Libro: ${bookTitle} eliminado con éxito`, {
       position: 'top-right',
       icon: '🗑️'
     })
-    loadBooks()
   }
 
   async function handleBookSave (updatedItem) {
@@ -54,6 +53,10 @@ export function BookList () {
   useEffect(() => {
     loadBooks()
   }, [])
+
+  useEffect(() => {
+    setPages(Math.ceil(books.length / rowsPerPage))
+  }, [books])
 
   return (
     <div className='flex flex-col p-6 md:px-10 max-w-[60rem] mx-auto min-h-dvh'>

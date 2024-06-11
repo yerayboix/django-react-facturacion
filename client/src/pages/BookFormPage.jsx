@@ -1,20 +1,36 @@
 import { useForm } from 'react-hook-form'
 import { createBook, getAllBooks } from '../api/books.api'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Toaster, toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 
 export function BookFormPage ({ sharedBooks, sharedBooksState }) {
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   const onSubmit = async (data) => {
-    const res = await createBook(data)
-    const books = await getAllBooks()
-    sharedBooksState(books.data)
-    toast.success('Libro añadido con éxito', {
-      position: 'top-right',
-      icon: '📚'
-    })
-    console.log(data)
+    try {
+      const res = await createBook(data)
+
+      if (res.status === 200 || res.status === 201) {
+        const books = await getAllBooks()
+        sharedBooksState(books.data)
+        toast.success('Libro añadido con éxito', {
+          position: 'top-right',
+          icon: '📚'
+        })
+        console.log(data)
+      } else {
+        // Handle unexpected status codes
+        toast.error(`Unexpected status code: ${res.status}`, {
+          position: 'top-right',
+          icon: '⛔️'
+        })
+        console.error(`Unexpected status code: ${res.status}`)
+      }
+    } catch (error) {
+      toast.error('Error al añadir el libro', {
+        position: 'top-right',
+        icon: '⛔️'
+      })
+    }
   }
 
   return (

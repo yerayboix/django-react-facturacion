@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link } from '@nextui-org/react'
-import { set } from 'react-hook-form'
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input } from '@nextui-org/react'
 
 export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item, handleClose }) {
   const [formData, setFormData] = useState({ ...item })
