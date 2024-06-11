@@ -1,13 +1,11 @@
-import { NextUIProvider, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from '@nextui-org/react'
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import {  Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from '@nextui-org/react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { BookPage } from './pages/BookPage'
 import { BookFormPage } from './pages/BookFormPage'
-import { Navigation } from './components/Navigation'
-import { Toaster, toast } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import { ChevronDown, Lock, Activity, Flash, Server, TagUser, Scale } from './components/Icons.jsx'
 import { AcmeLogo } from './components/AcmeLogo.jsx'
 import './css/main.css'
-import { Nav } from 'react-bootstrap'
 // import { Nav } from 'react-bootstrap'
 export const dynamic = 'force-dynamic'
 
@@ -60,7 +58,7 @@ function App () {
         <NavbarBrand>
           <Link href='/' aria-current='page' color='foreground'>
             <AcmeLogo />
-            <p className='font-bold text-inherit'>ACME</p>
+            <p className='font-bold text-inherit'>MUDITHA</p>
           </Link>
         </NavbarBrand>
         <NavbarContent className='hidden sm:flex gap-4' justify='center'>

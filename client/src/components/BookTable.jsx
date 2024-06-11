@@ -8,7 +8,7 @@ import { DeleteIcon } from '../icons/DeleteIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { IconMenuDown } from '../icons/IconMenuDown'
 import { ModalBookEdit } from './ModalBookEdit'
-import { SearchIcon } from './Icons'
+import { SearchIcon, ChevronDownIcon } from './Icons'
 
 export function BookTable ({ headers, contents, handleBookDelete, sharedBooksState, handleBookSave }) {
   const [selectedBook, setSelectedBook] = useState(null)
@@ -134,11 +134,13 @@ export function BookTable ({ headers, contents, handleBookDelete, sharedBooksSta
                 <Dropdown>
                   <DropdownTrigger>
                     <Button
+                      size='sm'
                       color='transparent'
                       isIconOnly
                       aria-label='Actions'
                     >
-                      <IconMenuDown className={iconClasses} style={{ fontSize: '2.5rem' }} />
+                      <ChevronDownIcon />
+                      {/* <IconMenuDown className={iconClasses} style={{ fontSize: '2.5rem' }} /> */}
                     </Button>
                   </DropdownTrigger>
                   <DropdownMenu variant='faded' aria-label='Dropdown menu with description'>
