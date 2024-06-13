@@ -22,7 +22,7 @@ export function BookItem (book) {
         width={140}
       />
       <CardFooter className='flex-col items-center p-1'>
-        <h4 className='font-bold text-large text-left py-0'>SHAMBALA DEL SEÑOR HJASDAASDS JASJD ASDHJAJSHDAHJD HJSJ SAH</h4>
+        <h4 className='font-bold text-large text-left py-0' style={{maxWidth: '140px'}}>Revisar cuando el titulo es gigante</h4>
         <small className='text-default-500'>{book.book.author}</small>
         <p className='mt-0 font-bold flex-nowrap' style={{ display: 'flex', alignItems: 'flex-end' }}>
           <BoxIcon width={30} height='auto' style={{ paddingTop: '2px', marginRight: '5px' }} />
