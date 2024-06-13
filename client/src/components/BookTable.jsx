@@ -112,10 +112,11 @@ export function BookTable ({ headers, contents, handleBookDelete, sharedBooksSta
           wrapper: 'min-h-[222px]'
         }}
       >
-        <TableHeader columns={headers} aria-label='Book list'>
+        <TableHeader contents={headers} aria-label='Book list'>
           <TableColumn style={centerStyle}>IMAGEN</TableColumn>
           <TableColumn style={centerStyle}>ID</TableColumn>
           <TableColumn style={centerStyle}>TÍTULO</TableColumn>
+          <TableColumn style={centerStyle}>AUTOR</TableColumn>
           <TableColumn style={centerStyle}>CANTIDAD</TableColumn>
           <TableColumn style={centerStyle}>PRECIO €</TableColumn>
           <TableColumn style={centerStyle}>DESCUENTO %</TableColumn>

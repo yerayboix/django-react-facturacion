@@ -45,6 +45,15 @@ export function ModalBookEdit ({ isOpen, onOpenChange, handleSave, item, handleC
               />
               <Input
                 autoFocus
+                label='Autor'
+                placeholder='Autor del libro'
+                variant='bordered'
+                value={formData.author}
+                name='author'
+                onChange={handleChange}
+              />
+              <Input
+                autoFocus
                 label='Cantidad'
                 placeholder='Cantidad de libros en almacén'
                 variant='bordered'

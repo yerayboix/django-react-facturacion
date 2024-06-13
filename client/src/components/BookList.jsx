@@ -4,6 +4,7 @@ import { deleteBook, getAllBooks, updateBook } from '../api/books.api'
 import { BookTable } from './BookTable'
 import { BookFormPage } from '../pages/BookFormPage'
 import { toast } from 'react-hot-toast'
+import { BookItem } from './BookItem'
 
 export function BookList () {
   const [books, setBooks] = useState([])
@@ -77,8 +78,19 @@ export function BookList () {
             </>
             )}
       </div>
-      <div className='class-name' style={{ display: 'flex', justifyContent: 'center', marginLeft: 'auto', margiRight: 'auto' }}>
+      <div className='class-name' style={{ display: 'flex', justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
         <BookFormPage sharedBooks={books} sharedBooksState={setBooks} />
+      </div>
+      <div className='class-name' style={{ display: 'flex', justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
+        {bookHeaders.length > 0
+          ? (
+            <BookItem book={books[0]} handleBookDelete={handleBookDelete} />
+            )
+          : (
+            <>
+              <h1>No hay libros</h1>
+            </>
+            )}
       </div>
     </div>
   )

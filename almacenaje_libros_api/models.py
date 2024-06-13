@@ -6,6 +6,7 @@ BOOKS
 '''
 class Book(models.Model):
     title = models.CharField(max_length=256, unique=True)
+    author = models.CharField(max_length=256, default='')
     amount = models.IntegerField(default=0)
     price = models.FloatField(default=0.0)
     discount = models.FloatField(default=0.0)
