@@ -1,25 +1,53 @@
 /* eslint-disable react/jsx-key */
-import { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { deleteBook, getAllBooks, updateBook } from '../api/books.api'
+import {
+  Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Dropdown,
+  DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem, Button, useDisclosure,
+  Pagination, Input
+} from '@nextui-org/react'
 import { BookTable } from './BookTable'
 import { BookFormPage } from '../pages/BookFormPage'
 import { toast } from 'react-hot-toast'
 import { BookItem } from './BookItem'
+import { ModalBookEdit } from './ModalBookEdit'
+import { SearchIcon, ChevronDownIcon } from './Icons'
 
 export function BookList () {
   const [books, setBooks] = useState([])
-  const [bookHeaders, setBookHeaders] = useState([])
-  const [pages, setPages] = useState(1)
-  const rowsPerPage = 6
+  const [selectedBook, setSelectedBook] = useState(null)
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [page, setPage] = useState(1)
+  const rowsPerPage = 8
+  const [searchTerm, setSearchTerm] = useState('')
+
+  useEffect(() => {
+    loadBooks()
+  }, [])
+
+  useEffect(() => {
+    if (books.length < (page - 1) * rowsPerPage) {
+      setPage(page - 1)
+    }
+  }, [books.length, page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [searchTerm])
 
   async function loadBooks () {
     const res = await getAllBooks()
     console.log(res.data)
     setBooks(res.data)
-    if (res.data.length > 0) {
-      setBookHeaders(Object.keys(res.data[0]))
-      console.log(Object.keys(res.data[0]))
-    }
+  }
+
+  const handleBookEdit = (book) => {
+    console.log(book)
+    setSelectedBook(book)
+  }
+
+  const handleClose = () => {
+    setSelectedBook(null)
   }
 
   async function handleBookDelete (bookId, bookTitle) {
@@ -51,47 +79,85 @@ export function BookList () {
     }
   }
 
-  useEffect(() => {
-    loadBooks()
-  }, [])
+  const filteredBooks = React.useMemo(() => {
+    return books.filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  }, [searchTerm, books])
 
-  useEffect(() => {
-    setPages(Math.ceil(books.length / rowsPerPage))
-  }, [books])
+  const displayedBooks = React.useMemo(() => {
+    const start = (page - 1) * rowsPerPage
+    const end = start + rowsPerPage
+    return filteredBooks.slice(start, end)
+  }, [page, filteredBooks])
+
+  
 
   return (
     <div className='flex flex-col p-6 md:px-10 max-w-[60rem] mx-auto min-h-dvh'>
-      <div className='table-responsive'>
-        {bookHeaders.length > 0
-          ? (
-            <BookTable
-              headers={bookHeaders}
-              contents={books}
-              handleBookDelete={handleBookDelete}
-              handleBookSave={handleBookSave}
-              ariaLabel='Book list'
-            />
-            )
-          : (
-            <>
-              <h1>No hay libros</h1>
-            </>
-            )}
-      </div>
       <div className='class-name' style={{ display: 'flex', justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
         <BookFormPage sharedBooks={books} sharedBooksState={setBooks} />
       </div>
+      <Input
+        label='Buscar por título'
+        clearable
+        bordered
+        fullWidth
+        color='seconday'
+        size='lg'
+        placeholder='Escribe para buscar...'
+        classNames={{
+          label: 'text-black/50 dark:text-white/90',
+          input: [
+            'bg-transparent',
+            'text-black/90 dark:text-white/90',
+            'placeholder:text-default-700/50 dark:placeholder:text-white/60'
+          ],
+          inputWrapper: [
+            'shadow-xl',
+            'mb-1',
+            'bg-white dark:bg-default/70',
+            'shadow-lg ring-0 ring-offset-0',
+            '!cursor-text'
+          ]
+        }}
+        startContent={
+          <SearchIcon className='mb-1 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
+        }
+        isClearable
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onClear={() => setSearchTerm('')}
+      />
       <div className='class-name' style={{ display: 'flex', justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
-        {bookHeaders.length > 0
-          ? (
-            <BookItem book={books[0]} handleBookDelete={handleBookDelete} />
-            )
-          : (
-            <>
-              <h1>No hay libros</h1>
-            </>
-            )}
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
+          {displayedBooks.map((book) => (
+              <div className='p-4' key={book.id}>
+                <BookItem book={book} handleBookEdit={handleBookEdit} handleBookDelete={handleBookDelete} onOpen={onOpen} onOpenChange={onOpenChange} />
+              </div>
+          ))}
+        </div>
       </div>
+      { displayedBooks.length > 0 && (
+        <div className='flex w-full justify-center'>
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            color='primary'
+            page={page}
+            total={Math.ceil(filteredBooks.length / rowsPerPage)}
+            onChange={(page) => setPage(page)}
+          />
+          {selectedBook && (
+              <ModalBookEdit
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                handleSave={handleBookSave}
+                item={selectedBook}
+                handleClose={handleClose}
+              />
+          )}
+        </div>
+      )}
     </div>
+    
   )
 }

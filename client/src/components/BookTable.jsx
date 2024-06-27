@@ -62,36 +62,7 @@ export function BookTable ({ headers, contents, handleBookDelete, sharedBooksSta
 
   return (
     <>
-      <Input
-        label='Buscar por título'
-        clearable
-        bordered
-        fullWidth
-        color='seconday'
-        size='lg'
-        placeholder='Escribe para buscar...'
-        classNames={{
-          label: 'text-black/50 dark:text-white/90',
-          input: [
-            'bg-transparent',
-            'text-black/90 dark:text-white/90',
-            'placeholder:text-default-700/50 dark:placeholder:text-white/60'
-          ],
-          inputWrapper: [
-            'shadow-xl',
-            'mb-1',
-            'bg-white dark:bg-default/70',
-            'shadow-lg ring-0 ring-offset-0',
-            '!cursor-text'
-          ]
-        }}
-        startContent={
-          <SearchIcon className='mb-1 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
-        }
-        isClearable
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onClear={() => setSearchTerm('')}
-      />
+      
       <Table
         isHeaderSticky
         aria-label='Example table with client side pagination'

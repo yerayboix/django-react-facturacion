@@ -5,30 +5,34 @@ import { DeleteIcon } from '../icons/DeleteIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { BoxIcon, SearchIcon, ChevronDownIcon } from './Icons'
 
-export function BookItem (book) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
 
   const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0'
   const iconClassesDanger = 'text-xl pointer-events-none flex-shrink-0'
   const centerStyle = { textAlign: 'center' }
 
+  const handleEdit = (book) => {
+    handleBookEdit(book)
+  }
+
   return (
-    <Card className='p-1 flex-col items-center'>
+    <Card className='flex-col justify-start  overflow-visible rounded-md p-0 shadow-2xl border-1 border-black-500'>
       <Image
-        isBlurred
         alt='Card background'
-        className='object-cover rounded-xl'
+        className='w-full object-cover rounded-md'
         src='/src/assets/images/Shambala.jpg'
-        width={140}
+        width={270}
       />
-      <CardFooter className='flex-col items-center p-1'>
-        <h4 className='font-bold text-large text-left py-0' style={{maxWidth: '140px'}}>Revisar cuando el titulo es gigante</h4>
-        <small className='text-default-500'>{book.book.author}</small>
-        <p className='mt-0 font-bold flex-nowrap' style={{ display: 'flex', alignItems: 'flex-end' }}>
-          <BoxIcon width={30} height='auto' style={{ paddingTop: '2px', marginRight: '5px' }} />
-          {book.book.amount} - {book.book.price} €/u
+      <CardFooter className='flex-col p-1' style={{ display: 'flex', alignSelf: 'flex-start' }}>
+        <h4 className='font-bold justify-start py-0' style={{ alignSelf: 'flex-start' }}>{book.title}</h4>
+        <small className='justify-start text-default-500' style={{ alignSelf: 'flex-start' }}>{book.author}</small>
+        <p className='mt-4 text-sm' style={{ display: 'flex', alignSelf: 'flex-start' }}>
+          Precio: {book.price} €/u
         </p>
-        <small className='text-default-500 mt-0' style={{ fontSize: '60%', color: '#c00505' }}>{book.book.discount} % descuento</small>
+        <p className='mt-0 text-sm' style={{ display: 'flex', alignSelf: 'flex-start' }}>
+          Stock: {book.amount} unidades
+        </p>
+        <small className='text-default-500 mt-0' style={{ fontSize: '60%', color: '#c00505', alignSelf: 'flex-start' }}>{book.discount} % descuento</small>
         <Dropdown>
           <DropdownTrigger>
             <Button
@@ -36,7 +40,7 @@ export function BookItem (book) {
               color='primary'
               isIconOnly
               aria-label='Actions'
-              className='mt-2 w-full'
+              className='mt-2 w-full rounded-md'
             >
               Acciones
               <ChevronDownIcon />
@@ -50,7 +54,7 @@ export function BookItem (book) {
                 key='edit'
                 description='Editar información del libro'
                 startContent={<EditIcon className={iconClasses} />}
-                onClick={() => handleEditClick(content)}
+                onClick={() => handleEdit(book)}
                 aria-label='Edit book'
               >
                 Editar libro
