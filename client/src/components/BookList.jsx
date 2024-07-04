@@ -93,9 +93,6 @@ export function BookList () {
 
   return (
     <div className='flex flex-col p-6 md:px-10 max-w-[60rem] mx-auto min-h-dvh'>
-      <div className='class-name' style={{ display: 'flex', justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
-        <BookFormPage sharedBooks={books} sharedBooksState={setBooks} />
-      </div>
       <Input
         label='Buscar por título'
         clearable

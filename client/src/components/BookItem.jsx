@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-key */
 import React from 'react'
-import { Card, CardFooter, CardBody, CardHeader, Image, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem, useDisclosure } from '@nextui-org/react'
+import { Card, CardFooter, CardBody, CardHeader, Image, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem, Tooltip, Chip } from '@nextui-org/react'
 import { DeleteIcon } from '../icons/DeleteIcon'
 import { EditIcon } from '../icons/EditIcon'
-import { BoxIcon, SearchIcon, ChevronDownIcon } from './Icons'
+import { BoxIcon, SearchIcon, ChevronDownIcon, IconMoneyEuroCircleFill, IconDropboxCircle } from './Icons'
 
 export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
 
   const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0'
   const iconClassesDanger = 'text-xl pointer-events-none flex-shrink-0'
   const centerStyle = { textAlign: 'center' }
-  const truncatedTitle = book.title.length > 10 ? book.title.substring(0, 10) + '...' : book.title;
+  const truncatedTitle = book.title.length > 10 ? book.title.substring(0, 15) + '...' : book.title;
 
   const handleEdit = (book) => {
     handleBookEdit(book)
@@ -22,21 +22,30 @@ export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
         alt='Card background'
         className='w-full object-cover rounded-md'
         src='/src/assets/images/Shambala.jpg'
-        width={300}
+        width={'100%'}
       />
       <CardHeader className='flex-col p-1' style={{ display: 'flex', alignSelf: 'flex-start' }}>
-        <h4 className='font-bold justify-start py-0' style={{ alignSelf: 'flex-start' }}>{truncatedTitle}</h4>
+        <Tooltip content={book.title} color='primary' placement='top'>
+          <h4 className='font-bold justify-start py-0' style={{ alignSelf: 'flex-start' }}>{truncatedTitle}</h4>
+        </Tooltip>
         <small className='justify-start text-default-500' style={{ alignSelf: 'flex-start' }}>{book.author}</small>
       </CardHeader>
-      <CardBody className='flex-col p-1 py-0 h-full' style={{ display: 'flex', justifyContent: 'flex-start', height: '100%' }}>
-        <div className=''>
-          <p className='mt-4 text-sm' style={{ display: 'flex', alignSelf: 'flex-start' }}>
-            Precio: {book.price} €/u
-          </p>
-          <p className='mt-0 text-sm' style={{ display: 'flex', alignSelf: 'flex-start' }}>
-            Stock: {book.amount} unidades
-          </p>
-          <small className='text-default-500 mt-0' style={{ fontSize: '60%', color: '#c00505', alignSelf: 'flex-start' }}>{book.discount} % descuento</small>  
+      <CardBody className='flex-col p-1 py-0 h-full' style={{ display: 'flex', justifyContent: 'flex-center', height: '100%' }}>
+        <div className='flex gap-1'>
+          <Chip
+            startContent={<IconMoneyEuroCircleFill />}
+            variant="flat"
+            color="success"
+          >
+            {book.price}
+          </Chip>
+          <Chip
+            startContent={<IconDropboxCircle />}
+            variant="bordered"
+            color="warning"
+          >
+            {book.amount} unidades
+          </Chip>
         </div>
       </CardBody>
       <CardFooter className='flex-col p-1' style={{ display: 'flex', alignSelf: 'flex-start' }}>
