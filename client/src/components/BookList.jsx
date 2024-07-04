@@ -18,7 +18,7 @@ export function BookList () {
   const [selectedBook, setSelectedBook] = useState(null)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [page, setPage] = useState(1)
-  const rowsPerPage = 8
+  const rowsPerPage = 20
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {

@@ -17,13 +17,13 @@ export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
   }
 
   return (
-    <Card className='flex-col justify-start rounded-md p-0 border-0 shadow-none' style={{ width: '200px', minHeight: '250px', backgroundColor: 'transparent' }}>
-      <Image
+    <Card className='flex-col justify-start rounded-md p-0 border-0 shadow-none' style={{ width: '200px', backgroundColor: 'transparent' }}>
+      {/* <Image
         alt='Card background'
         className='w-full object-cover rounded-md'
         src='/src/assets/images/Shambala.jpg'
         width={'100%'}
-      />
+      /> */}
       <CardHeader className='flex-col p-1' style={{ display: 'flex', alignSelf: 'flex-start' }}>
         <Tooltip content={book.title} color='primary' placement='top'>
           <h4 className='font-bold justify-start py-0' style={{ alignSelf: 'flex-start' }}>{truncatedTitle}</h4>
@@ -54,6 +54,7 @@ export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
             <Button
               size='sm'
               color='primary'
+              variant='flat'
               isIconOnly
               aria-label='Actions'
               className='mt-2 w-full rounded-md'
