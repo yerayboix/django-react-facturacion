@@ -127,7 +127,7 @@ export function BookList () {
         onClear={() => setSearchTerm('')}
       />
       <div className='class-name' style={{ display: 'flex', justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4'>
           {displayedBooks.map((book) => (
               <div className='p-4' key={book.id}>
                 <BookItem book={book} handleBookEdit={handleBookEdit} handleBookDelete={handleBookDelete} onOpen={onOpen} onOpenChange={onOpenChange} />
