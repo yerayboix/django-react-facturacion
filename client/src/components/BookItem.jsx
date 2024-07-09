@@ -25,7 +25,7 @@ export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
         width={'100%'}
       /> */}
       <CardHeader className='flex-col p-1' style={{ display: 'flex', alignSelf: 'flex-start' }}>
-        <Tooltip content={book.title} color='primary' placement='top'>
+        <Tooltip content={book.title} color='foreground' placement='top'>
           <h4 className='font-bold justify-start py-0' style={{ alignSelf: 'flex-start' }}>{truncatedTitle}</h4>
         </Tooltip>
         <small className='justify-start text-default-500' style={{ alignSelf: 'flex-start' }}>{book.author}</small>
@@ -42,7 +42,7 @@ export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
           <Chip
             startContent={<IconDropboxCircle />}
             variant="bordered"
-            color="warning"
+            color="secondary"
           >
             {book.amount} unidades
           </Chip>
@@ -53,11 +53,12 @@ export function BookItem ({ book, handleBookEdit, handleBookDelete, onOpen }) {
           <DropdownTrigger>
             <Button
               size='sm'
-              color='primary'
+              radius='md'
               variant='flat'
               isIconOnly
               aria-label='Actions'
-              className='mt-2 w-full rounded-md'
+              className='mt-2 w-full'
+              style={{ backgroundColor: '#3d3e41', color: 'white' }}
             >
               Acciones
               <ChevronDownIcon />

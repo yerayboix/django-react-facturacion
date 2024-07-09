@@ -137,7 +137,6 @@ export function BookList () {
           <Pagination
             isCompact
             showControls
-            showShadow
             color='primary'
             page={page}
             total={Math.ceil(filteredBooks.length / rowsPerPage)}
