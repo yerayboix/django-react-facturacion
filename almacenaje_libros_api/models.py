@@ -5,11 +5,10 @@ from django.db import models
 BOOKS
 '''
 class Book(models.Model):
-    title = models.CharField(max_length=256, unique=True)
+    title = models.CharField(max_length=256)
     author = models.CharField(max_length=256, default='')
     amount = models.IntegerField(default=0)
-    price = models.FloatField(default=0.0)
-    discount = models.FloatField(default=0.0)
+    isbn = models.CharField(max_length=256, default='')
 
     def __str__(self):
         return self.title
