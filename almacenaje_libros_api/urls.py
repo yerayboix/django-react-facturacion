@@ -8,5 +8,6 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('api/v1/books/', BookListView.as_view(), name='book-list'),
     path('api/v1/books/<int:pk>/', BookRetrieveUpdateDestroyView.as_view(), name='book-detail'),
+    path('api/v1/books/total-pages/', TotalPagesView.as_view(), name='book-list-total-pages'),
     path("docs/", include_docs_urls(title='Books API'))
 ]
