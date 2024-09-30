@@ -15,6 +15,7 @@ def generate_book_data(i):
         "title": f"Book Title {i}",
         "author": f"Author {i}",
         "amount": random.randint(10, 1000),  # Cantidad aleatoria de 10 a 1000
+        "pvp": random.randint(10, 30),  # Precio por unidad aleatorio de 10 a 30
         "isbn": generate_isbn()
     }
 
