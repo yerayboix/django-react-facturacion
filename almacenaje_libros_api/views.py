@@ -67,8 +67,14 @@ class OrderListView(generics.ListAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         query = self.request.query_params.get('query', None)
+        order_type_map = {
+            'Pedido': 'P',
+            'Factura': 'F',
+            'Web': 'W',
+        }
         if query:
-            queryset = queryset.filter(Q(title__icontains=query) | Q(author__icontains=query))
+            print(order_type_map.get(query))
+            queryset = queryset.filter(Q(order_number__icontains=query) | Q(payment_method__icontains=query) | Q(invoice__client_name__icontains=query) | Q(payment_date__icontains=query) | Q(order_type__in=[order_type_map.get(query)] if order_type_map.get(query) else []))
         return queryset
 
 class OrderTotalPagesView(APIView):
@@ -79,8 +85,14 @@ class OrderTotalPagesView(APIView):
     def get(self, request, *args, **kwargs):
         query = request.query_params.get('query', '')
         rows = int(request.query_params.get('rows', 10))
+        order_type_map = {
+            'Pedido': 'P',
+            'Factura': 'F',
+            'Web': 'W',
+        }
         if query:
-            queryset = Order.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+            print(order_type_map.get(query))
+            queryset = Order.objects.filter(Q(order_number__icontains=query) | Q(payment_method__icontains=query) | Q(invoice__client_name__icontains=query) | Q(payment_date__icontains=query) | Q(order_type__in=[order_type_map.get(query)] if order_type_map.get(query) else []))
         else:
             queryset = Order.objects.all()
 
@@ -101,3 +113,89 @@ class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     
+class InvoiceListView(generics.ListAPIView):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
+    pagination_class = CustomPageNumberPagination
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.query_params.get('query', None)
+        if query:
+            queryset = queryset.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        return queryset
+    
+class InvoiceTotalPagesView(APIView):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
+    pagination_class = CustomPageNumberPagination
+
+    def get(self, request, *args, **kwargs):
+        query = request.query_params.get('query', '')
+        rows = int(request.query_params.get('rows', 10))
+        if query:
+            queryset = Invoice.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        else:
+            queryset = Invoice.objects.all()
+
+        total_count = queryset.count()
+        total_pages = int(total_count / rows)
+        
+        return Response({
+            'total_pages': total_pages,
+            'count': total_count
+            
+        }, status=status.HTTP_200_OK)
+
+class InvoiceCreateView(generics.CreateAPIView):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
+
+class InvoiceRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
+
+'''
+INVOICE LINES
+'''
+class InvoiceLineListView(generics.ListAPIView):
+    queryset = InvoiceLine.objects.all()
+    serializer_class = InvoiceLineSerializer
+    pagination_class = CustomPageNumberPagination
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.query_params.get('query', None)
+        if query:
+            queryset = queryset.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        return queryset
+
+class InvoiceLineTotalPagesView(APIView):
+    queryset = InvoiceLine.objects.all()
+    serializer_class = InvoiceLineSerializer
+    pagination_class = CustomPageNumberPagination
+
+    def get(self, request, *args, **kwargs):
+        query = request.query_params.get('query', '')
+        rows = int(request.query_params.get('rows', 10))
+        if query:
+            queryset = InvoiceLine.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        else:
+            queryset = InvoiceLine.objects.all()
+
+        total_count = queryset.count()
+        total_pages = int(total_count / rows)
+        
+        return Response({
+            'total_pages': total_pages,
+            'count': total_count
+            
+        }, status=status.HTTP_200_OK)
+
+class InvoiceLineCreateView(generics.CreateAPIView):
+    queryset = InvoiceLine.objects.all()
+    serializer_class = InvoiceLineSerializer
+
+class InvoiceLineRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = InvoiceLine.objects.all()
+    serializer_class = InvoiceLineSerializer

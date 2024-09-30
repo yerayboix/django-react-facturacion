@@ -16,5 +16,14 @@ urlpatterns = [
     path('api/v1/orders/create/', OrderCreateView.as_view(), name='order-create'),
     path('api/v1/orders/<int:pk>/', OrderRetrieveUpdateDestroyView.as_view(), name='order-detail'),
     # Invoices
+    path('api/v1/invoices/', InvoiceListView.as_view(), name='invoice-list'),
+    path('api/v1/invoices/total-pages/', InvoiceTotalPagesView.as_view(), name='invoice-list-total-pages'),
+    path('api/v1/invoices/create/', InvoiceCreateView.as_view(), name='invoice-create'),
+    path('api/v1/invoices/<int:pk>/', InvoiceRetrieveUpdateDestroyView.as_view(), name='invoice-detail'),
+    # Invoice Lines
+    path('api/v1/invoice-lines/', InvoiceLineListView.as_view(), name='invoice-line-list'),
+    path('api/v1/invoice-lines/total-pages/', InvoiceLineTotalPagesView.as_view(), name='invoice-line-list-total-pages'),
+    path('api/v1/invoice-lines/create/', InvoiceLineCreateView.as_view(), name='invoice-line-create'),
+    path('api/v1/invoice-lines/<int:pk>/', InvoiceLineRetrieveUpdateDestroyView.as_view(), name='invoice-line-detail'),
     path("docs/", include_docs_urls(title='Books API'))
 ]

@@ -7,6 +7,8 @@ class BookSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
+    order_type_display = serializers.CharField(source='get_order_type_display', read_only=True)
+
     class Meta:
         model = Order
         fields = '__all__'
