@@ -2,8 +2,11 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 from .views import *
+from .views import InvoiceLineViewSet
 
 router = routers.DefaultRouter()
+
+router.register(r'invoice-lines', InvoiceLineViewSet, basename='invoice-line')
 
 urlpatterns = [
     path('api/v1/books/', BookListView.as_view(), name='book-list'),
@@ -21,9 +24,10 @@ urlpatterns = [
     path('api/v1/invoices/create/', InvoiceCreateView.as_view(), name='invoice-create'),
     path('api/v1/invoices/<int:pk>/', InvoiceRetrieveUpdateDestroyView.as_view(), name='invoice-detail'),
     # Invoice Lines
-    path('api/v1/invoice-lines/', InvoiceLineListView.as_view(), name='invoice-line-list'),
-    path('api/v1/invoice-lines/total-pages/', InvoiceLineTotalPagesView.as_view(), name='invoice-line-list-total-pages'),
-    path('api/v1/invoice-lines/create/', InvoiceLineCreateView.as_view(), name='invoice-line-create'),
-    path('api/v1/invoice-lines/<int:pk>/', InvoiceLineRetrieveUpdateDestroyView.as_view(), name='invoice-line-detail'),
+    # path('api/v1/invoice-lines/', InvoiceLineListView.as_view(), name='invoice-line-list'),
+    # path('api/v1/invoice-lines/total-pages/', InvoiceLineTotalPagesView.as_view(), name='invoice-line-list-total-pages'),
+    # path('api/v1/invoice-lines/create/', InvoiceLineCreateView.as_view(), name='invoice-line-create'),
+    # path('api/v1/invoice-lines/<int:pk>/', InvoiceLineRetrieveUpdateDestroyView.as_view(), name='invoice-line-detail'),
+    path('api/v1/', include(router.urls)),
     path("docs/", include_docs_urls(title='Books API'))
 ]

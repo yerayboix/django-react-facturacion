@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import generics
+from rest_framework import status, generics, viewsets
+from rest_framework.decorators import action
 from .models import *
 from .serializer import *
 from django.db.models import Q
@@ -169,6 +169,48 @@ class InvoiceLineListView(generics.ListAPIView):
         if query:
             queryset = queryset.filter(Q(title__icontains=query) | Q(author__icontains=query))
         return queryset
+    
+    @action(detail=False, methods=['get'], url_path='by-invoice')
+    def get_invoice_lines(self, request):
+        invoice_id = request.query_params.get('invoice_id')
+        if not invoice_id:
+            return Response({"error": "invoice_id parameter is required"}, status=400)
+        
+        invoice_lines = InvoiceLine.objects.filter(invoice__id=invoice_id)
+        page = self.paginate_queryset(invoice_lines)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = self.get_serializer(invoice_lines, many=True)
+        return Response(serializer.data)
+    
+class InvoiceLineViewSet(viewsets.ModelViewSet):
+    queryset = InvoiceLine.objects.all()
+    serializer_class = InvoiceLineSerializer
+    pagination_class = CustomPageNumberPagination
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.query_params.get('query', None)
+        if query:
+            queryset = queryset.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        return queryset
+    
+    @action(detail=False, methods=['get'], url_path='by-invoice')
+    def get_invoice_lines(self, request):
+        invoice_id = request.query_params.get('invoice_id')
+        if not invoice_id:
+            return Response({"error": "invoice_id parameter is required"}, status=400)
+        
+        invoice_lines = InvoiceLine.objects.filter(invoice__id=invoice_id)
+        page = self.paginate_queryset(invoice_lines)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = self.get_serializer(invoice_lines, many=True)
+        return Response(serializer.data)
 
 class InvoiceLineTotalPagesView(APIView):
     queryset = InvoiceLine.objects.all()
